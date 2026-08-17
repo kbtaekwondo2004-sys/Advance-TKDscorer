@@ -5,13 +5,6 @@ const { Server } = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 
-app.get("/healthz", (req, res) => {
-  res.status(200).json({
-    status: "ok",
-    service: "Advance TKDScorer Server"
-  });
-});
-
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -19,32 +12,22 @@ const io = new Server(server, {
   }
 });
 
-const PORT = process.env.PORT || 10000;
-
-app.get("/", (req, res) => {
-  res.json({
-    name: "Advance TKDScorer Server",
-    status: "online",
-    version: "1.0.0"
+// Health check
+app.get("/healthz", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    service: "Advance TKDScorer Server"
   });
 });
 
+// Basic test
+app.get("/", (req, res) => {
+  res.status(200).send("Advance TKDScorer Server is running");
+});
+
+// Socket connection
 io.on("connection", (socket) => {
   console.log("Judge connected:", socket.id);
-
-  socket.on("join", (data) => {
-    console.log("JOIN:", data);
-
-    if (data && data.code) {
-      socket.join(data.code);
-
-      socket.emit("joined", {
-        success: true,
-        code: data.code,
-        role: data.role || "judge"
-      });
-    }
-  });
 
   socket.on("score", (data) => {
     console.log("SCORE:", data);
@@ -66,6 +49,8 @@ io.on("connection", (socket) => {
     console.log("Judge disconnected:", socket.id);
   });
 });
+
+const PORT = process.env.PORT || 10000;
 
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`Advance TKDScorer server running on port ${PORT}`);
