@@ -5,6 +5,13 @@ const { Server } = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 
+app.get("/healthz", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    service: "Advance TKDScorer Server"
+  });
+});
+
 const io = new Server(server, {
   cors: {
     origin: "*",
