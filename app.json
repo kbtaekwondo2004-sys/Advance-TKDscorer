@@ -1,0 +1,35 @@
+{
+  "expo": {
+    "name": "Advance TKDScorer Judge",
+    "slug": "tkd-score-basic-judge",
+    "version": "1.7.2",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "android": {
+      "package": "com.tkdscorebasic.judge",
+      "versionCode": 172
+    },
+    "ios": {
+      "bundleIdentifier": "com.tkdscorebasic.judge",
+      "requireFullScreen": true,
+      "buildNumber": "172"
+    },
+    "plugins": [
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "PORTRAIT_UP"
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to scan the scoring server QR code",
+          "recordAudioAndroid": false
+        }
+      ]
+    ],
+    "icon": "./assets/app-icon.png"
+  },
+  "version": "1.7.2"
+}
